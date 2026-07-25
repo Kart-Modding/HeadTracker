@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "name": "${name}",
+  "description": "Replaces the colored dots on the locator bar with the tracked players' heads.",
+  "authors": [
+    "karton"
+  ],
+  "contact": {
+    "homepage": ""
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/headtracker/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.karton.headtracker.HeadTrackerMod"
+    ]
+  },
+  "mixins": [
+    "headtracker.mixins.json"
+  ],
+  "accessWidener": "headtracker.ct",
+  "depends": {
+    "fabricloader": ">=0.17",
+    "minecraft": "${minecraft}"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "dev.karton.headtracker.mixin",
+  "compatibilityLevel": "${java}",
+  "mixins": [],
+  "client": [
+    "LocatorBarRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
