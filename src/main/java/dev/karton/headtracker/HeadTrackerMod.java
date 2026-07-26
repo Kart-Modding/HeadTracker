@@ -19,6 +19,8 @@ public class HeadTrackerMod implements ModInitializer {
 
         //? if !release
         LOGGER.info("Hello Fabric world!");
+
+        HeadTrackerConfig.load();
     }
 
     /**

@@ -48,6 +48,11 @@ dependencies {
     // Use `mod{dependency type}` even on 26.1+ - loom-back-compat converts them
     modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
     fapi("fabric-lifecycle-events-v1", "fabric-resource-loader-v0", "fabric-content-registries-v0", "fabric-registry-sync-v0")
+
+    // Mod Menu config screen integration - compile-time only, not required at runtime
+    val modmenuVersion: String = sc.properties["deps.modmenu"]
+    modCompileOnly("maven.modrinth:modmenu:$modmenuVersion")
+    modLocalRuntime("maven.modrinth:modmenu:$modmenuVersion")
 }
 
 loom {

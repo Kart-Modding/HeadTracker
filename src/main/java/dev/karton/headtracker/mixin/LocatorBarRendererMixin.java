@@ -4,14 +4,20 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import dev.karton.headtracker.HeadTrackerConfig;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.PlayerFaceExtractor;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.waypoints.TrackedWaypoint;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.UUID;
 
@@ -71,4 +77,69 @@ public class LocatorBarRendererMixin {
         /*PlayerFaceRenderer.draw(graphics, skinTexture, x + 1, y + 1, 7, true, false, -1);
         *///?}
     }
+
+    // Letters drawn at the same height as the waypoint dots, positioned with the
+    // same angle-to-screen-x math the vanilla bar uses for the dots themselves.
+    private static final String[] headtracker$CARDINAL_LETTERS = {"N", "E", "S", "W"};
+    private static final float[] headtracker$CARDINAL_YAWS = {180.0F, -90.0F, 0.0F, 90.0F};
+
+    //? if >=26.1 {
+    @Inject(method = "extractRenderState", at = @At("TAIL"))
+    private void headtracker$renderCardinalDirections(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
+        if (!HeadTrackerConfig.showCardinalDirections) {
+            return;
+        }
+
+        Minecraft mc = Minecraft.getInstance();
+        Entity cameraEntity = mc.getCameraEntity();
+        if (cameraEntity == null) {
+            return;
+        }
+
+        float cameraYaw = cameraEntity.getViewYRot(deltaTracker.getGameTimeDeltaPartialTick(true));
+        int top = mc.getWindow().getGuiScaledHeight() - 24 - 5;
+        int screenMiddle = Mth.ceil((graphics.guiWidth() - 9) / 2.0F);
+
+        for (int i = 0; i < headtracker$CARDINAL_LETTERS.length; i++) {
+            float angle = Mth.wrapDegrees(headtracker$CARDINAL_YAWS[i] - cameraYaw);
+            if (angle <= -60.0F || angle > 60.0F) {
+                continue;
+            }
+
+            int dotPosition = Mth.floor(angle * 173.0F / 2.0F / 60.0F);
+            String letter = headtracker$CARDINAL_LETTERS[i];
+            int textX = screenMiddle + dotPosition + (9 - mc.font.width(letter)) / 2;
+            graphics.text(mc.font, letter, textX, top - 2, 0xFFFFFFFF);
+        }
+    }
+    //?} else {
+    /*@Inject(method = "render", at = @At("TAIL"))
+    private void headtracker$renderCardinalDirections(GuiGraphics graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
+        if (!HeadTrackerConfig.showCardinalDirections) {
+            return;
+        }
+
+        Minecraft mc = Minecraft.getInstance();
+        Entity cameraEntity = mc.getCameraEntity();
+        if (cameraEntity == null) {
+            return;
+        }
+
+        float cameraYaw = cameraEntity.getViewYRot(deltaTracker.getGameTimeDeltaPartialTick(true));
+        int top = mc.getWindow().getGuiScaledHeight() - 24 - 5;
+        int screenMiddle = Mth.ceil((graphics.guiWidth() - 9) / 2.0F);
+
+        for (int i = 0; i < headtracker$CARDINAL_LETTERS.length; i++) {
+            float angle = Mth.wrapDegrees(headtracker$CARDINAL_YAWS[i] - cameraYaw);
+            if (angle <= -60.0F || angle > 60.0F) {
+                continue;
+            }
+
+            int dotPosition = Mth.floor(angle * 173.0F / 2.0F / 60.0F);
+            String letter = headtracker$CARDINAL_LETTERS[i];
+            int textX = screenMiddle + dotPosition + (9 - mc.font.width(letter)) / 2;
+            graphics.drawString(mc.font, letter, textX, top - 2, 0xFFFFFFFF);
+        }
+    }
+    *///?}
 }

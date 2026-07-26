@@ -5,17 +5,20 @@
   "name": "${name}",
   "description": "Replaces the colored dots on the locator bar with the tracked players' heads.",
   "authors": [
-    "karton"
+    "Kartonekk"
   ],
   "contact": {
     "homepage": ""
   },
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/headtracker/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
       "dev.karton.headtracker.HeadTrackerMod"
+    ],
+    "modmenu": [
+      "dev.karton.headtracker.HeadTrackerModMenuApi"
     ]
   },
   "mixins": [

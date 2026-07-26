@@ -4,6 +4,7 @@
   "compatibilityLevel": "${java}",
   "mixins": [],
   "client": [
+    "HudMixin",
     "LocatorBarRendererMixin"
   ],
   "injectors": {
