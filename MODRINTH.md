@@ -1,4 +1,4 @@
-# HeadTracker
+# Head Locator
 
 Replaces the plain colored dots on the vanilla locator bar with the actual heads of the players they represent.
 
