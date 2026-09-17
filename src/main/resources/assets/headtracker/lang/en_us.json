@@ -1,5 +1,11 @@
 {
   "headtracker.config.title": "HeadTracker Settings",
   "headtracker.config.show_cardinal_directions": "Show Cardinal Directions",
-  "headtracker.config.force_locator_bar": "Always Show Locator Bar"
+  "headtracker.config.force_locator_bar": "Always Show Locator Bar",
+  "headtracker.config.border_mode": "Border Mode",
+  "headtracker.config.border_show_names": "Border: Show Names",
+  "headtracker.config.border_show_distance": "Border: Show Distance",
+  "headtracker.config.border_xaero_waypoints": "Border: Xaero's Waypoints",
+  "headtracker.config.border_inset": "Border Inset",
+  "headtracker.config.border_head_size": "Border Head Size"
 }

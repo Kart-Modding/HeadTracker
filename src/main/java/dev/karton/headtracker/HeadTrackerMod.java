@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 public class HeadTrackerMod implements ModInitializer {
     public static final String MOD_ID = "headtracker";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    public static final String VERSION = /*$ mod_version*/ "0.1.0";
-    public static final String MINECRAFT = /*$ minecraft*/ "26.1.2";
+    public static final String VERSION = /*$ mod_version*/ "0.3.0";
+    public static final String MINECRAFT = /*$ minecraft*/ "26.3";
 
     @Override
     public void onInitialize() {
@@ -18,7 +18,7 @@ public class HeadTrackerMod implements ModInitializer {
         // Proceed with mild caution.
 
         //? if !release
-        LOGGER.info("Hello Fabric world!");
+        //LOGGER.info("Hello Fabric world!");
 
         HeadTrackerConfig.load();
     }

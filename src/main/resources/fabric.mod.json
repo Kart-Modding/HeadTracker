@@ -28,5 +28,9 @@
   "depends": {
     "fabricloader": ">=0.17",
     "minecraft": "${minecraft}"
+  },
+  "suggests": {
+    "modmenu": "*",
+    "xaerominimap": "*"
   }
 }

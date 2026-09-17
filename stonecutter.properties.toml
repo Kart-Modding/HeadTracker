@@ -2,7 +2,7 @@
 mod.id = "headtracker"
 mod.name = "HeadTracker"
 mod.group = "dev.karton.headtracker"
-mod.version = "0.2.0"
+mod.version = "0.3.0"
 
 deps.fabric_loader = "0.19.3"
 loomx.loom_version = "1.17-SNAPSHOT"
@@ -64,3 +64,10 @@ mod.mc_releases = ["26.2"]
 
 deps.fabric_api = "0.155.2+26.2"
 deps.modmenu = "20.0.1"
+
+["26.3.x"]
+mod.mc_compat = "~26.3"
+mod.mc_releases = ["26.3"]
+
+deps.fabric_api = "0.160.7+26.3"
+deps.modmenu = "21.0.0-beta.1"

@@ -2,7 +2,7 @@ plugins {
     id("dev.kikugie.stonecutter")
 }
 
-stonecutter active "26.2.x"
+stonecutter active "26.3.x"
 
 // Builds every registered version's jar in one go, output lands in build/libs/<mod version>/
 tasks.register("chiseledBuild") {
@@ -27,6 +27,12 @@ stonecutter parameters {
             // 26.1 split GuiGraphics into an immediate-draw and a render-state-extracting variant
             replace("GuiGraphics", "GuiGraphicsExtractor")
             replace("PlayerFaceRenderer", "PlayerFaceExtractor")
+        }
+
+        string(current.parsed >= "26.3") {
+            // 26.3 moved RenderPipeline out of blaze3d into the renderpearl package
+            replace("com.mojang.blaze3d.pipeline.RenderPipeline", "com.mojang.renderpearl.api.pipeline.RenderPipeline")
+            replace("Lcom/mojang/blaze3d/pipeline/RenderPipeline;", "Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;")
         }
     }
 }

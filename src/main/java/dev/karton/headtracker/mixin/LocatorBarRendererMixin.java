@@ -3,7 +3,7 @@ package dev.karton.headtracker.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import dev.karton.headtracker.HeadTrackerConfig;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -32,7 +32,7 @@ public class LocatorBarRendererMixin {
         method = "*",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V"
+            target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V"
         )
     )
     private void headtracker$renderPlayerHead(
@@ -74,7 +74,7 @@ public class LocatorBarRendererMixin {
         //? if >=26.1 {
         PlayerFaceExtractor.extractRenderState(graphics, skinTexture, x + 1, y + 1, 7, info.showHat(), false, -1);
         //?} else {
-        /*PlayerFaceRenderer.draw(graphics, skinTexture, x + 1, y + 1, 7, true, false, -1);
+        /*PlayerFaceExtractor.draw(graphics, skinTexture, x + 1, y + 1, 7, true, false, -1);
         *///?}
     }
 
@@ -114,7 +114,7 @@ public class LocatorBarRendererMixin {
     }
     //?} else {
     /*@Inject(method = "render", at = @At("TAIL"))
-    private void headtracker$renderCardinalDirections(GuiGraphics graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
+    private void headtracker$renderCardinalDirections(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         if (!HeadTrackerConfig.showCardinalDirections) {
             return;
         }
