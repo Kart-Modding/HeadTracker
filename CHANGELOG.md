@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+- Added NeoForge support (1.21.6 - 26.3) and Forge support (1.21.10 - 26.3). The settings screen opens from the mods list on both.
+- Quilt is supported through the Fabric build.
+- Jars are now named per loader: `headtracker-<loader>-<version>+<minecraft>.jar`.
+
 ## 0.3.0 - 2026-08-16
 
 - Added a border mode option: waypoints are projected onto the edges of the screen instead of the locator bar, which frees up the experience bar and tracks players through a full 360°. Modelled on [Locator Border](https://github.com/liqwtf/locator-border).

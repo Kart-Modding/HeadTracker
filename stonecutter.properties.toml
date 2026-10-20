@@ -2,72 +2,149 @@
 mod.id = "headtracker"
 mod.name = "HeadTracker"
 mod.group = "dev.karton.headtracker"
-mod.version = "0.3.0"
+mod.version = "0.4.0"
 
 deps.fabric_loader = "0.19.3"
 loomx.loom_version = "1.17-SNAPSHOT"
 
+# Sections:
+#   ["<version>"]            - shared by every loader of that version
+#   [<loader>."<version>"]   - loader-specific (mod.mc_compat uses that loader's range syntax)
+# Forge versions are written as `<minecraft>-<forge>`, the way the Forge maven names them.
+
 ["1.21.6"]
-# Mod compatibility range in fabric.mod.json
-mod.mc_compat = "1.21.6"
 # List of releases to be marked compatible on Modrinth/Curseforge
 mod.mc_releases = ["1.21.6"]
 
+[fabric."1.21.6"]
+mod.mc_compat = "1.21.6"
 deps.fabric_api = "0.128.2+1.21.6"
 deps.modmenu = "15.0.2"
 
+[neoforge."1.21.6"]
+mod.mc_compat = "[1.21.6]"
+deps.neoforge = "21.6.20-beta"
+
 ["1.21.7"]
-mod.mc_compat = "1.21.7"
+# List of releases to be marked compatible on Modrinth/Curseforge
 mod.mc_releases = ["1.21.7"]
 
+[fabric."1.21.7"]
+mod.mc_compat = "1.21.7"
 deps.fabric_api = "0.128.2+1.21.7"
 deps.modmenu = "15.0.2"
 
+[neoforge."1.21.7"]
+mod.mc_compat = "[1.21.7]"
+deps.neoforge = "21.7.25-beta"
+
 ["1.21.8"]
-mod.mc_compat = "1.21.8"
+# List of releases to be marked compatible on Modrinth/Curseforge
 mod.mc_releases = ["1.21.8"]
 
+[fabric."1.21.8"]
+mod.mc_compat = "1.21.8"
 deps.fabric_api = "0.134.0+1.21.8"
 deps.modmenu = "15.0.2"
 
+[neoforge."1.21.8"]
+mod.mc_compat = "[1.21.8]"
+deps.neoforge = "21.8.57"
+
 ["1.21.9"]
-mod.mc_compat = "1.21.9"
+# List of releases to be marked compatible on Modrinth/Curseforge
 mod.mc_releases = ["1.21.9"]
 
+[fabric."1.21.9"]
+mod.mc_compat = "1.21.9"
 deps.fabric_api = "0.134.0+1.21.9"
 deps.modmenu = "16.0.1"
 
+[neoforge."1.21.9"]
+mod.mc_compat = "[1.21.9]"
+deps.neoforge = "21.9.16-beta"
+
 ["1.21.10"]
-mod.mc_compat = "1.21.10"
+# List of releases to be marked compatible on Modrinth/Curseforge
 mod.mc_releases = ["1.21.10"]
 
+[fabric."1.21.10"]
+mod.mc_compat = "1.21.10"
 deps.fabric_api = "0.138.3+1.21.10"
 deps.modmenu = "16.0.1"
 
+[neoforge."1.21.10"]
+mod.mc_compat = "[1.21.10]"
+deps.neoforge = "21.10.66"
+
+[forge."1.21.10"]
+mod.mc_compat = "[1.21.10]"
+deps.forge = "1.21.10-60.1.18"
+
 ["1.21.11"]
-mod.mc_compat = "1.21.11"
+# List of releases to be marked compatible on Modrinth/Curseforge
 mod.mc_releases = ["1.21.11"]
 
+[fabric."1.21.11"]
+mod.mc_compat = "1.21.11"
 deps.fabric_api = "0.141.4+1.21.11"
 deps.modmenu = "17.0.0"
 
+[neoforge."1.21.11"]
+mod.mc_compat = "[1.21.11]"
+deps.neoforge = "21.11.48"
+
+[forge."1.21.11"]
+mod.mc_compat = "[1.21.11]"
+deps.forge = "1.21.11-61.2.4"
+
 ["26.1.x"]
-mod.mc_compat = "~26.1"
+# List of releases to be marked compatible on Modrinth/Curseforge
 mod.mc_releases = ["26.1"]
 
+[fabric."26.1.x"]
+mod.mc_compat = "~26.1"
 deps.fabric_api = "0.144.4+26.1"
 deps.modmenu = "18.0.0"
 
+[neoforge."26.1.x"]
+mod.mc_compat = "[26.1, 26.2)"
+deps.neoforge = "26.1.2.122"
+
+[forge."26.1.x"]
+mod.mc_compat = "[26.1.2]"
+deps.forge = "26.1.2-64.1.5"
+
 ["26.2.x"]
-mod.mc_compat = "~26.2"
+# List of releases to be marked compatible on Modrinth/Curseforge
 mod.mc_releases = ["26.2"]
 
+[fabric."26.2.x"]
+mod.mc_compat = "~26.2"
 deps.fabric_api = "0.155.2+26.2"
 deps.modmenu = "20.0.1"
 
+[neoforge."26.2.x"]
+mod.mc_compat = "[26.2, 26.3)"
+deps.neoforge = "26.2.0.93"
+
+[forge."26.2.x"]
+mod.mc_compat = "[26.2]"
+deps.forge = "26.2-65.1.5"
+
 ["26.3.x"]
-mod.mc_compat = "~26.3"
+# List of releases to be marked compatible on Modrinth/Curseforge
 mod.mc_releases = ["26.3"]
 
+[fabric."26.3.x"]
+mod.mc_compat = "~26.3"
 deps.fabric_api = "0.160.7+26.3"
 deps.modmenu = "21.0.0-beta.1"
+
+[neoforge."26.3.x"]
+mod.mc_compat = "[26.3, 26.4)"
+deps.neoforge = "26.3.0.95"
+
+[forge."26.3.x"]
+mod.mc_compat = "[26.3]"
+deps.forge = "26.3-66.0.13"

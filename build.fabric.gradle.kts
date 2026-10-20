@@ -5,7 +5,7 @@ plugins {
 
 // DO NOT set group = ...!
 version = "${property("mod.version")}+${sc.current.version}"
-base.archivesName = property("mod.id") as String
+base.archivesName = "${property("mod.id") as String}-fabric"
 
 val requiredJava: JavaVersion = when {
     sc.current.parsed >= "26.1" -> JavaVersion.VERSION_25
@@ -104,6 +104,8 @@ tasks {
 
         val mixinJava = "JAVA_${requiredJava.majorVersion}"
         filesMatching("*.mixins.json") { expand("java" to mixinJava) }
+
+        exclude("META-INF/neoforge.mods.toml", "META-INF/mods.toml")
     }
 
     register<Copy>("buildAndCollect") {

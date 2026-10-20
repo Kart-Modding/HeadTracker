@@ -1,0 +1,24 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "MIT"
+issueTrackerURL = "https://github.com/Kart-Modding/HeadTracker/issues"
+
+[[mods]]
+modId = "${id}"
+displayName = "${name}"
+version = "${version}"
+authors = "Kartonekk"
+description = "Replaces the colored dots on the locator bar with the tracked players' heads."
+logoFile = "assets/headtracker/icon.png"
+displayURL = "https://github.com/Kart-Modding/HeadTracker"
+
+[[mixins]]
+config = "headtracker.mixins.json"
+
+[[dependencies.${id}]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft}"
+ordering = "NONE"
+side = "BOTH"
+

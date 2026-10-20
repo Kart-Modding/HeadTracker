@@ -36,19 +36,22 @@ public class HudMixin {
         return original || HeadTrackerConfig.forceLocatorBar;
     }
 
-    //? if >=26.1 {
+    // Vanilla draws the whole hotbar block in one method; NeoForge and Forge split it into
+    // separate HUD layers and skip that method, so there the hook is the contextual bar layer.
+    //? if forge {
+    /*@Inject(method = "extractContextualInfoState", at = @At("TAIL"))
+    *///?} else if neoforge && >=26.1 {
+    /*@Inject(method = "extractContextualInfoBar", at = @At("TAIL"))
+    *///?} else if neoforge {
+    /*@Inject(method = "renderContextualInfoBar", at = @At("TAIL"))
+    *///?} else if >=26.1 {
     @Inject(method = "extractHotbarAndDecorations", at = @At("TAIL"))
-    private void headtracker$renderLocatorBorder(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
-        if (HeadTrackerConfig.borderMode) {
-            BorderRenderer.render(graphics, deltaTracker);
-        }
-    }
     //?} else {
     /*@Inject(method = "renderHotbarAndDecorations", at = @At("TAIL"))
+    *///?}
     private void headtracker$renderLocatorBorder(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         if (HeadTrackerConfig.borderMode) {
             BorderRenderer.render(graphics, deltaTracker);
         }
     }
-    *///?}
 }

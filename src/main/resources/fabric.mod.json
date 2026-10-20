@@ -8,14 +8,16 @@
     "Kartonekk"
   ],
   "contact": {
-    "homepage": ""
+    "homepage": "https://github.com/Kart-Modding/HeadTracker",
+    "sources": "https://github.com/Kart-Modding/HeadTracker",
+    "issues": "https://github.com/Kart-Modding/HeadTracker/issues"
   },
   "license": "MIT",
   "icon": "assets/headtracker/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "dev.karton.headtracker.HeadTrackerMod"
+      "dev.karton.headtracker.HeadTrackerFabric"
     ],
     "modmenu": [
       "dev.karton.headtracker.HeadTrackerModMenuApi"

@@ -1,24 +1,25 @@
 package dev.karton.headtracker;
 
-import net.fabricmc.api.ModInitializer;
 import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HeadTrackerMod implements ModInitializer {
+/**
+ * Loader-agnostic entry point, called from {@code HeadTrackerFabric}, {@code HeadTrackerNeoForge}
+ * or {@code HeadTrackerForge} depending on which loader the jar was built for.
+ */
+public final class HeadTrackerMod {
     public static final String MOD_ID = "headtracker";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    public static final String VERSION = /*$ mod_version*/ "0.3.0";
+    public static final String VERSION = /*$ mod_version*/ "0.4.0";
     public static final String MINECRAFT = /*$ minecraft*/ "26.3";
 
-    @Override
-    public void onInitialize() {
-        // This code runs as soon as Minecraft is in a mod-load-ready state.
-        // However, some things (like resources) may still be uninitialized.
-        // Proceed with mild caution.
+    private HeadTrackerMod() {
+    }
 
+    public static void init() {
         //? if !release
-        //LOGGER.info("Hello Fabric world!");
+        //LOGGER.info("Hello world!");
 
         HeadTrackerConfig.load();
     }
