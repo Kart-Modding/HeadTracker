@@ -1,6 +1,7 @@
 plugins {
     id("net.neoforged.moddev") version "2.0.147"
     id("neoforge-mutex")
+    id("me.modmuss50.mod-publish-plugin")
 }
 
 // DO NOT set group = ...!
@@ -15,7 +16,7 @@ val requiredJava: JavaVersion = when {
     else -> JavaVersion.VERSION_1_8
 }
 
-// This can be used for publishing on Modrinth and Curseforge
+// Releases marked compatible on Modrinth and CurseForge
 val compatibleVersions: List<String> = sc.properties.rawOrNull("mod", "mc_releases")
     ?.asList().orEmpty().map { it.toString() }
 
@@ -82,5 +83,38 @@ tasks {
         inputs.property("version", project.property("mod.version"))
         from(jar.flatMap { it.archiveFile }, named<Jar>("sourcesJar").flatMap { it.archiveFile })
         into(rootProject.layout.buildDirectory.file("libs/${project.property("mod.version")}"))
+    }
+}
+
+// Uploads this node's jar to Modrinth and CurseForge.
+// CI runs it when mod.version changes on master. Without MODRINTH_TOKEN it is a dry run, so a local
+// `./gradlew publishMods` only logs what it would upload.
+publishMods {
+    val modrinthId = findProperty("publish.modrinth")?.toString().orEmpty()
+    val curseforgeId = findProperty("publish.curseforge")?.toString().orEmpty()
+
+    file = tasks.jar.flatMap { it.archiveFile }
+    displayName = "${property("mod.name")} ${project.version} (NeoForge)"
+    version = project.version.toString()
+    changelog = providers.environmentVariable("PUBLISH_CHANGELOG").orElse("")
+    type = STABLE
+    modLoaders.addAll("neoforge")
+    dryRun = providers.environmentVariable("MODRINTH_TOKEN").orNull == null
+
+    if (modrinthId.isNotEmpty()) modrinth {
+        projectId = modrinthId
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        minecraftVersions.addAll(compatibleVersions)
+        optional("xaeros-minimap")
+    }
+
+    if (curseforgeId.isNotEmpty()) curseforge {
+        projectId = curseforgeId
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        minecraftVersions.addAll(compatibleVersions)
+        javaVersions.add(requiredJava)
+        clientRequired = true
+        serverRequired = false
+        optional("xaeros-minimap")
     }
 }

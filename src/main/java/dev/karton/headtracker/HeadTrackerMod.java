@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 public final class HeadTrackerMod {
     public static final String MOD_ID = "headtracker";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    public static final String VERSION = /*$ mod_version*/ "0.4.0";
+    public static final String VERSION = /*$ mod_version*/ "0.5.0";
     public static final String MINECRAFT = /*$ minecraft*/ "26.3";
 
     private HeadTrackerMod() {

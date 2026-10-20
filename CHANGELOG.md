@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0
+
+- New versions are uploaded to Modrinth and CurseForge automatically for every loader and Minecraft version.
+
 ## 0.4.0
 
 - Added NeoForge support (1.21.6 - 26.3) and Forge support (1.21.10 - 26.3). The settings screen opens from the mods list on both.
