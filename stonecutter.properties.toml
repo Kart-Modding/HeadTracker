@@ -79,7 +79,7 @@ deps.modmenu = "16.0.1"
 
 [neoforge."1.21.10"]
 mod.mc_compat = "[1.21.10]"
-deps.neoforge = "21.10.66"
+deps.neoforge = "21.10.64"
 
 [forge."1.21.10"]
 mod.mc_compat = "[1.21.10]"
