@@ -5,8 +5,8 @@ mod.group = "dev.karton.headtracker"
 mod.version = "0.5.0"
 
 # Project IDs for `publishMods` (see .github/workflows/build.yml). Leave one empty to skip that site.
-publish.modrinth = ""
-publish.curseforge = ""
+publish.modrinth = "mBmenKIU"
+publish.curseforge = "1625139"
 
 deps.fabric_loader = "0.19.3"
 loomx.loom_version = "1.17-SNAPSHOT"
