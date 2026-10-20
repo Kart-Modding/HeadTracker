@@ -1,7 +1,5 @@
 package dev.karton.headtracker;
 
-import net.fabricmc.loader.api.FabricLoader;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -131,7 +129,7 @@ public final class XaeroWaypoints {
 
         boolean loaded = false;
         for (String modId : MOD_IDS) {
-            if (FabricLoader.getInstance().isModLoaded(modId)) {
+            if (Platform.isModLoaded(modId)) {
                 loaded = true;
                 break;
             }

@@ -2,7 +2,7 @@ plugins {
     id("dev.kikugie.stonecutter")
 }
 
-stonecutter active "26.3.x"
+stonecutter active "26.3.x-fabric"
 
 // Builds every registered version's jar in one go, output lands in build/libs/<mod version>/
 tasks.register("chiseledBuild") {
@@ -12,10 +12,22 @@ tasks.register("chiseledBuild") {
 
 // See https://stonecutter.kikugie.dev/wiki/config/params
 stonecutter parameters {
-    swaps["mod_version"] = "\"${property("mod.version")}\";"
+    val (version, loader) = current.project.split('-', limit = 2)
+
+    // Makes version- and loader-specific sections of `stonecutter.properties.toml` apply
+    properties {
+        tags(version, loader)
+    }
+
+    // Adds loader constants to Stonecutter comments (i.e. `//? if fabric {...`)
+    constants {
+        match(loader, "fabric", "neoforge", "forge")
+    }
+
+    swaps["mod_version"] = "\"${properties.get<String>("mod.version")}\";"
     swaps["minecraft"] = "\"${node.metadata.version}\";"
-    constants["release"] = property("mod.id") != "template"
-    dependencies["fapi"] = node.project.property("deps.fabric_api") as String
+    constants["release"] = properties.get<String>("mod.id") != "template"
+    dependencies["fapi"] = properties.getOrNull<String>("deps.fabric_api") ?: "0"
 
     replacements {
         string(current.parsed >= "1.21.11") {

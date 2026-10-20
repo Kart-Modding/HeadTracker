@@ -2,7 +2,6 @@ package dev.karton.headtracker;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,7 +9,7 @@ import java.nio.file.Path;
 
 public class HeadTrackerConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final Path PATH = FabricLoader.getInstance().getConfigDir().resolve(HeadTrackerMod.MOD_ID + ".json");
+    private static final Path PATH = Platform.configDir().resolve(HeadTrackerMod.MOD_ID + ".json");
 
     public static final int BORDER_INSET_MIN = 0;
     public static final int BORDER_INSET_MAX = 64;
