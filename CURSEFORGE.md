@@ -13,10 +13,10 @@
 ![Compatibility](https://raw.githubusercontent.com/Kart-Modding/HeadTracker/master/Promotional%20Images/Infographics/compatibility.png)
 
 ## Setup
-- **Fabric / Quilt** — settings via [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu) (optional)
-- **NeoForge / Forge** — settings via *Mods → HeadTracker → Config*
+- **Fabric / Quilt** - settings via [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu) (optional)
+- **NeoForge / Forge** - settings via *Mods → HeadTracker → Config*
 - Optional: [Xaero's Minimap](https://www.curseforge.com/minecraft/mc-mods/xaeros-minimap) waypoints in border mode
-- Client-side only — join any server
+- Client-side only - join any server
 
 ## Limitations
 - Only the player dot changes; self arrow and death markers stay vanilla.
