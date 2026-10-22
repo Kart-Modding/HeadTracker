@@ -22,6 +22,7 @@ public class HeadTrackerConfig {
     public static boolean borderShowNames = false;
     public static boolean borderShowDistance = false;
     public static boolean borderXaeroWaypoints = true;
+    public static boolean trackPets = true;
     public static int borderInset = 16;
     public static int borderHeadSize = 12;
 
@@ -39,6 +40,7 @@ public class HeadTrackerConfig {
                 borderShowNames = data.borderShowNames;
                 borderShowDistance = data.borderShowDistance;
                 borderXaeroWaypoints = data.borderXaeroWaypoints;
+                trackPets = data.trackPets;
                 borderInset = clamp(data.borderInset, BORDER_INSET_MIN, BORDER_INSET_MAX);
                 borderHeadSize = clamp(data.borderHeadSize, BORDER_HEAD_SIZE_MIN, BORDER_HEAD_SIZE_MAX);
             }
@@ -71,6 +73,7 @@ public class HeadTrackerConfig {
         boolean borderShowNames = false;
         boolean borderShowDistance = false;
         boolean borderXaeroWaypoints = true;
+        boolean trackPets = true;
         int borderInset = 16;
         int borderHeadSize = 12;
 
@@ -82,6 +85,7 @@ public class HeadTrackerConfig {
             data.borderShowNames = HeadTrackerConfig.borderShowNames;
             data.borderShowDistance = HeadTrackerConfig.borderShowDistance;
             data.borderXaeroWaypoints = HeadTrackerConfig.borderXaeroWaypoints;
+            data.trackPets = HeadTrackerConfig.trackPets;
             data.borderInset = HeadTrackerConfig.borderInset;
             data.borderHeadSize = HeadTrackerConfig.borderHeadSize;
             return data;

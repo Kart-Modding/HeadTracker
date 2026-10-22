@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Added a *Track Pets (Last Seen)* option (on by default): the client remembers where your tamed wolves, cats and parrots were last seen, separately for every singleplayer world and multiplayer server, and border mode points to them. Sitting pets and pets out of range get a plate with their initial; with *Show Distance* on, pets out of range also show how long ago they were seen. Nothing is needed on the server.
+- Pets you see die, untame or change owner are forgotten, as are remembered pets that should be in sight but aren't.
+- Builds now only run for pushes to master (or by hand from the Actions tab).
+
 ## 0.5.0
 
 - New versions are uploaded to Modrinth and CurseForge automatically for every loader and Minecraft version.

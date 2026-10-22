@@ -22,6 +22,7 @@ import net.minecraft.world.waypoints.TrackedWaypoint;
 import net.minecraft.world.waypoints.PartialTickSupplier;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -82,6 +83,10 @@ public final class BorderRenderer {
 
         if (HeadTrackerConfig.borderXaeroWaypoints) {
             renderXaeroWaypoints(graphics, rect, cameraEntity, deltaTracker);
+        }
+
+        if (HeadTrackerConfig.trackPets) {
+            renderPets(graphics, rect, cameraEntity, deltaTracker);
         }
 
         if (HeadTrackerConfig.showCardinalDirections) {
@@ -218,7 +223,6 @@ public final class BorderRenderer {
         }
 
         Minecraft mc = Minecraft.getInstance();
-        Font font = mc.font;
         float partialTick = deltaTracker.getGameTimeDeltaPartialTick(true);
         Vec3 eye = cameraEntity.getEyePosition(partialTick);
         float cameraYaw = cameraEntity.getViewYRot(partialTick);
@@ -228,8 +232,6 @@ public final class BorderRenderer {
         float aspect = (float) graphics.guiWidth() / Math.max(1, graphics.guiHeight());
         float halfHorizontalFov =
             (float) Math.toDegrees(Math.atan(Math.tan(Math.toRadians(halfVerticalFov)) * aspect));
-
-        int size = HeadTrackerConfig.borderHeadSize;
 
         for (XaeroWaypoints.Waypoint waypoint : waypoints) {
             double dx = waypoint.x() + 0.5 - eye.x;
@@ -247,50 +249,126 @@ public final class BorderRenderer {
                 continue;
             }
 
-            Projected at = project(rect, yawDiff);
-            int x = Mth.floor(at.x());
-            int y = Mth.floor(at.y());
-            int iconX = x - size / 2;
-            int iconY = y - size / 2;
-
             // Xaero paints its own waypoint marker as a solid plate in the waypoint's color
             // with the initials in white on top of it, so use that here rather than inventing
             // a second look for the same waypoint.
-            graphics.fill(iconX, iconY, iconX + size, iconY + size, waypoint.color());
-
-            String initials = waypoint.initials();
-            if (!initials.isEmpty()) {
-                text(
-                    graphics, font, initials,
-                    x - font.width(initials) / 2,
-                    y - font.lineHeight / 2,
-                    0xFFFFFFFF
-                );
-            }
-
-            boolean behind = Math.abs(yawDiff) > 90.0F;
-            boolean arrowBelow = below || (!above && behind);
-            int arrowSpaceAbove = 0;
-            int arrowSpaceBelow = 0;
-            if (above || below || behind) {
-                Identifier arrow = arrowBelow ? ARROW_DOWN : ARROW_UP;
-                int arrowY = arrowBelow ? iconY + size + 2 : iconY - ARROW_HEIGHT - 2;
-                graphics.blitSprite(RenderPipelines.GUI_TEXTURED, arrow, x - ARROW_WIDTH / 2, arrowY, ARROW_WIDTH, ARROW_HEIGHT, 0xFFFFFFFF);
-
-                if (arrowBelow) {
-                    arrowSpaceBelow = ARROW_HEIGHT + 2;
-                } else {
-                    arrowSpaceAbove = ARROW_HEIGHT + 2;
-                }
-            }
-
             String name = HeadTrackerConfig.borderShowNames && !waypoint.name().isEmpty() ? waypoint.name() : null;
             String distanceText = HeadTrackerConfig.borderShowDistance
                 ? Mth.floor(Math.sqrt(dx * dx + dy * dy + dz * dz)) + "m"
                 : null;
-            if (name != null || distanceText != null) {
-                renderLabels(graphics, at, x, y, size, arrowSpaceAbove, arrowSpaceBelow, name, distanceText);
+            renderPlate(graphics, rect, yawDiff, above, below, waypoint.color(), waypoint.initials(), name, distanceText);
+        }
+    }
+
+    /**
+     * Remembered pets get the same plate as Xaero's waypoints, with the pet's initial on it.
+     * Pets that are loaded and following the player are left out - they're right there anyway.
+     * Unlike Xaero's waypoints they stay on the border while on screen too, since nothing else
+     * marks a last-seen spot in the world.
+     */
+    private static void renderPets(GuiGraphicsExtractor graphics, Rect rect, Entity cameraEntity, DeltaTracker deltaTracker) {
+        Minecraft mc = Minecraft.getInstance();
+        float partialTick = deltaTracker.getGameTimeDeltaPartialTick(true);
+        Vec3 eye = cameraEntity.getEyePosition(partialTick);
+        float cameraYaw = cameraEntity.getViewYRot(partialTick);
+        float cameraPitch = cameraEntity.getViewXRot(partialTick);
+        float halfVerticalFov = mc.options.fov().get() / 2.0F;
+        String dimension = cameraEntity.level().dimension().toString();
+        long now = System.currentTimeMillis();
+
+        for (PetTracker.Pet pet : PetTracker.pets()) {
+            if (!dimension.equals(pet.dimension) || (pet.loaded && !pet.sitting)) {
+                continue;
             }
+
+            double dx = pet.x - eye.x;
+            double dy = pet.y + 0.5 - eye.y;
+            double dz = pet.z - eye.z;
+            double horizontal = Math.sqrt(dx * dx + dz * dz);
+
+            float yawDiff = Mth.wrapDegrees((float) Math.toDegrees(Math.atan2(-dx, dz)) - cameraYaw);
+            float pitchDiff = Mth.wrapDegrees((float) -Math.toDegrees(Math.atan2(dy, horizontal)) - cameraPitch);
+            boolean above = pitchDiff < -halfVerticalFov;
+            boolean below = pitchDiff > halfVerticalFov;
+
+            String petName = pet.name != null ? pet.name : "";
+            String initial = petName.isEmpty() ? "?" : petName.substring(0, 1).toUpperCase(Locale.ROOT);
+            int color = ARGB.setBrightness(ARGB.color(255, pet.uuid.hashCode()), 0.9F) | 0xFF000000;
+
+            String name = HeadTrackerConfig.borderShowNames && !petName.isEmpty() ? petName : null;
+            String distanceText = null;
+            if (HeadTrackerConfig.borderShowDistance) {
+                distanceText = Mth.floor(Math.sqrt(dx * dx + dy * dy + dz * dz)) + "m";
+                if (!pet.loaded) {
+                    distanceText += " · " + age(now - pet.lastSeen);
+                }
+            }
+            renderPlate(graphics, rect, yawDiff, above, below, color, initial, name, distanceText);
+        }
+    }
+
+    // How long ago a pet was last seen, in the largest unit that fits.
+    private static String age(long millis) {
+        long minutes = Math.max(0L, millis) / 60000L;
+        if (minutes < 1L) {
+            return "now";
+        }
+        if (minutes < 60L) {
+            return minutes + "m ago";
+        }
+        long hours = minutes / 60L;
+        return hours < 48L ? hours + "h ago" : hours / 24L + "d ago";
+    }
+
+    /** A solid plate with white initials on the border, plus the arrow and labels around it. */
+    private static void renderPlate(
+        GuiGraphicsExtractor graphics,
+        Rect rect,
+        float yawDiff,
+        boolean above,
+        boolean below,
+        int color,
+        String initials,
+        String name,
+        String distanceText
+    ) {
+        Font font = Minecraft.getInstance().font;
+        int size = HeadTrackerConfig.borderHeadSize;
+        Projected at = project(rect, yawDiff);
+        int x = Mth.floor(at.x());
+        int y = Mth.floor(at.y());
+        int iconX = x - size / 2;
+        int iconY = y - size / 2;
+
+        graphics.fill(iconX, iconY, iconX + size, iconY + size, color);
+
+        if (!initials.isEmpty()) {
+            text(
+                graphics, font, initials,
+                x - font.width(initials) / 2,
+                y - font.lineHeight / 2,
+                0xFFFFFFFF
+            );
+        }
+
+        boolean behind = Math.abs(yawDiff) > 90.0F;
+        boolean arrowBelow = below || (!above && behind);
+        int arrowSpaceAbove = 0;
+        int arrowSpaceBelow = 0;
+        if (above || below || behind) {
+            Identifier arrow = arrowBelow ? ARROW_DOWN : ARROW_UP;
+            int arrowY = arrowBelow ? iconY + size + 2 : iconY - ARROW_HEIGHT - 2;
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, arrow, x - ARROW_WIDTH / 2, arrowY, ARROW_WIDTH, ARROW_HEIGHT, 0xFFFFFFFF);
+
+            if (arrowBelow) {
+                arrowSpaceBelow = ARROW_HEIGHT + 2;
+            } else {
+                arrowSpaceAbove = ARROW_HEIGHT + 2;
+            }
+        }
+
+        if (name != null || distanceText != null) {
+            renderLabels(graphics, at, x, y, size, arrowSpaceAbove, arrowSpaceBelow, name, distanceText);
         }
     }
 

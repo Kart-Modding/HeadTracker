@@ -5,7 +5,8 @@
   "mixins": [],
   "client": [
     "HudMixin",
-    "LocatorBarRendererMixin"
+    "LocatorBarRendererMixin",
+    "MinecraftMixin"
   ],
   "injectors": {
     "defaultRequire": 1

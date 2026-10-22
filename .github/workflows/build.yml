@@ -1,10 +1,11 @@
 name: Build
 
 # Builds every Minecraft version for Fabric (also used on Quilt), NeoForge and Forge.
+# Only runs for what lands on master (or when started by hand from the Actions tab).
 # A push to master that changes mod.version also uploads the jars to Modrinth and CurseForge.
 on:
   push:
-  pull_request:
+    branches: [master]
   workflow_dispatch:
 
 permissions:

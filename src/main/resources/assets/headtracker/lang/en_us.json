@@ -6,6 +6,7 @@
   "headtracker.config.border_show_names": "Border: Show Names",
   "headtracker.config.border_show_distance": "Border: Show Distance",
   "headtracker.config.border_xaero_waypoints": "Border: Xaero's Waypoints",
+  "headtracker.config.track_pets": "Track Pets (Last Seen)",
   "headtracker.config.border_inset": "Border Inset",
   "headtracker.config.border_head_size": "Border Head Size"
 }
