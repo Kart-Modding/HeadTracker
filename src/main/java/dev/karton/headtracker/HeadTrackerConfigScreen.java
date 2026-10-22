@@ -87,6 +87,16 @@ public class HeadTrackerConfigScreen extends Screen {
         );
         row += ROW_HEIGHT;
 
+        this.addRenderableWidget(
+            CycleButton.onOffBuilder(HeadTrackerConfig.trackPets)
+                .create(
+                    centerX - 100, row, 200, 20,
+                    Component.translatable("headtracker.config.track_pets"),
+                    (button, value) -> HeadTrackerConfig.trackPets = value
+                )
+        );
+        row += ROW_HEIGHT;
+
         this.addRenderableWidget(new IntSlider(
             centerX - 100, row, 200, 20,
             "headtracker.config.border_inset",

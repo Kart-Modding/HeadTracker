@@ -33,11 +33,17 @@ Drop the jar for your loader into `mods/`. Nothing else is required.
 
 Optional: [Xaero's Minimap](https://modrinth.com/mod/xaeros-minimap) waypoints show up in border mode.
 
+## Pet tracking
+
+With *Track Pets (Last Seen)* on, the client remembers where each of your tamed wolves, cats and parrots was last seen, per singleplayer world and per multiplayer server (`config/headtracker/pets/`). Border mode shows them as plates with the pet's initial. The server only sends entities near you, so this is the last spot *you* saw them - exact for sitting pets and pets in unloaded chunks, which don't move.
+
 ## Known limitations
 
 - Only the 9×9 player dot is replaced; the self arrow and death markers stay vanilla.
 - Heads need the player in your tab list; anything else keeps the vanilla icon.
 - Border mode replaces the bar, so *Always Show Locator Bar* does nothing while it's on.
+- Remembered pets only show in border mode, not on the vanilla locator bar.
+- Pet tracking doesn't cover horses (their owner isn't sent to the client), skips Realms, and only knows what this computer has seen.
 
 ## Development
 

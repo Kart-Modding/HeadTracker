@@ -16,8 +16,10 @@
 - **Fabric / Quilt** - settings via [Mod Menu](https://modrinth.com/mod/modmenu) (optional)
 - **NeoForge / Forge** - settings via *Mods → HeadTracker → Config*
 - Optional: [Xaero's Minimap](https://modrinth.com/mod/xaeros-minimap) waypoints in border mode
+- Optional: border mode points to where your pets were last seen, remembered per world and per server
 - Client-side only - join any server
 
 ## Limitations
 - Only the player dot changes; self arrow and death markers stay vanilla.
 - Players must be in your tab list to get a head.
+- Pet tracking is client-side: it remembers the last spot you saw each pet, not where it is now.
