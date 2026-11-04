@@ -58,3 +58,7 @@ Multi-loader, multi-version via [Stonecutter](https://stonecutter.kikugie.dev/).
 Loader code is behind `//? if fabric` / `neoforge` / `forge` comments: `Platform` (config dir, mod checks), the `HeadTracker{Fabric,NeoForge,Forge}` entrypoints, and the border-mode hook in `HudMixin` (NeoForge/Forge split the vanilla HUD into layers). Quilt runs the Fabric jar. Forge starts at 1.21.10 because older Forge doesn't ship MixinExtras.
 
 `XaeroWaypoints` reads Xaero's Minimap purely through reflection and switches itself off if anything fails to resolve.
+
+## Creator
+
+[![Kartonekk: lifetime downloads on Modrinth and CurseForge](https://github-mc-widget.vercel.app/api/badge/creator)](https://github.com/kartonekk)

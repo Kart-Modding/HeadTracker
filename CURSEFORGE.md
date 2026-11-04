@@ -23,3 +23,7 @@
 - Only the player dot changes; self arrow and death markers stay vanilla.
 - Players must be in your tab list to get a head.
 - Pet tracking is client-side: it remembers the last spot you saw each pet, not where it is now.
+
+## Creator
+
+[![Kartonekk: lifetime downloads on Modrinth and CurseForge](https://wsrv.nl/?url=github-mc-widget.vercel.app/api/badge/creator&output=png&maxage=1d)](https://github.com/kartonekk)
